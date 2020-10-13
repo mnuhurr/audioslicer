@@ -39,9 +39,11 @@ def main():
     # get file list
     filenames = get_file_list(cfg['audio_dir'])
 
+    # process
     for fn in filenames:
         slicer.slice(fn, cfg['interval'])
 
+    # summary
     slicer.write_report(cfg['output_csv'])
 
 if __name__ == '__main__':
