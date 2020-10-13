@@ -49,7 +49,7 @@ class AudioSlicer:
 
         for offset_samples in range(0, len(y), interval_samples):
             # output filename
-            slice_fn = self.__out_fn__()
+            slice_fn = self.__out_fn__(hash_seed=filename)
 
             # output data
             slice_y = y[offset_samples:offset_samples + num_slice_samples]
@@ -70,16 +70,19 @@ class AudioSlicer:
 
 
 
-    def __out_fn__(self):
+    def __out_fn__(self, hash_seed=''):
         '''
         construct a filename for the next slice file. the filename is based on the number of written files.
 
+        :param hash_seed: something to add beside the index for the hashing, e.g. the original filename
         :return: str
         '''
 
         fn_base = '{:06d}'.format(self.out_count)
 
         if self.use_hashing:
+            # to avoid having every time the same filename for the same numbers use the input as seed
+            fn_base = hash_seed + fn_base
             fn_base = hashlib.md5(fn_base.encode('ascii')).hexdigest()
 
         fn_base = fn_base + '.wav'
