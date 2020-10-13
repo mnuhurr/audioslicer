@@ -30,13 +30,14 @@ def main():
     # create output directories if needed
     check_output_dirs(cfg)
 
-    # get file list
-    filenames = get_file_list(cfg['audio_dir'])
-
+    # worker
     slicer = AudioSlicer(output_dir=cfg['output_dir'],
                          interval=cfg['interval'],
                          audio_len=cfg['length'],
                          use_hashing=cfg['use_hashing'])
+
+    # get file list
+    filenames = get_file_list(cfg['audio_dir'])
 
     for fn in filenames:
         slicer.slice(fn, cfg['interval'])
