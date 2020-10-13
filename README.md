@@ -30,7 +30,6 @@ Lenght of slices in seconds.
 
 #### Example configuration
 ```
-
 audio_dir: ../audio
 output_dir: output
 output_csv: files.csv
@@ -39,5 +38,4 @@ use_hashing: true
 
 interval: 10.0
 length: 1.0
-
 ```
