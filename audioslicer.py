@@ -7,11 +7,11 @@ import soundfile as sf
 
 class AudioSlicer:
     '''
-    class to perform slicing of individual files
-
+    class to perform slicing of individual files. keeps track of generated segments. allows writing a summary csv
+    after file splitting.
     '''
 
-    def __init__(self, output_dir, interval, audio_len, use_hashing=False):
+    def __init__(self, output_dir, audio_len, use_hashing=False):
         '''
         initialize slicer.
 
@@ -25,7 +25,6 @@ class AudioSlicer:
         self.output_dir = output_dir
         self.use_hashing = use_hashing
 
-        self.interval = interval
         self.audio_len = audio_len
 
         # counter
@@ -94,6 +93,12 @@ class AudioSlicer:
 
 
     def write_report(self, csv_filename):
+        '''
+        write the summary csv
+
+        :param csv_filename: path to the csv file. suppose the directory exists as there is no error checking
+        :return: None
+        '''
         with open(csv_filename, 'wt') as f:
             csv_writer = csv.writer(f, delimiter=',')
 

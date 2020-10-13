@@ -32,7 +32,6 @@ def main():
 
     # worker
     slicer = AudioSlicer(output_dir=cfg['output_dir'],
-                         interval=cfg['interval'],
                          audio_len=cfg['length'],
                          use_hashing=cfg['use_hashing'])
 
