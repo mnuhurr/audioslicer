@@ -3,6 +3,7 @@ import hashlib
 import os
 import csv
 
+import numpy as np
 import soundfile as sf
 
 class AudioSlicer:
@@ -33,7 +34,7 @@ class AudioSlicer:
         self.csv_header = ['id', 'filename', 'source', 'offset']
         self.csv_rows = []
 
-    def slice(self, filename, interval):
+    def slice(self, filename, interval, normalize=False):
         '''
         process a single file. keeps track of the number of written files and updates the counter accordingly.
 
@@ -57,6 +58,10 @@ class AudioSlicer:
             if len(slice_y) < num_slice_samples:
                 continue
 
+            # normalization
+            if normalize:
+                y = self.normalize(y)
+
             # write file
             sf.write(file=slice_fn, data=slice_y, samplerate=sr)
 
@@ -68,6 +73,20 @@ class AudioSlicer:
             self.out_count += 1
 
 
+    def normalize(self, x):
+        '''
+        normalize signal using the infinity norm (i.e. absolute maximum). if the absolute maximum is zero
+        don't do anything. for multi channel signal normalization is done with the same maximum value.
+
+        :param x: signal to normalize
+        :return: normalized signal
+        '''
+        m = np.max(np.abs(x))
+
+        if m > 0:
+            return x / m
+
+        return x
 
     def __out_fn__(self, hash_seed=''):
         '''
