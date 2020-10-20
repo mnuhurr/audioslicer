@@ -31,7 +31,7 @@ once, i.e. the channels linked.
 Interval of slices in seconds.
 
 #### length
-Lenght of slices in seconds. 
+Length of slices in seconds. 
 
 #### Example configuration
 ```
