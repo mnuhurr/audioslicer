@@ -22,8 +22,12 @@ Filename for the summary csv file. The file contains a list of generated audio s
 If `use_hashing` is false, then the output filename is a running index. If `use_hashing` is true, then the output 
 filename is a md5 hash generated from the original filename and the running index. 
 
-#### normalize
-If `normalize` is set to true, the audio slices are normalized before writing. After the normalization the absolute
+#### normalize_input
+If `normalize_input` is set to true, the source audio is normalized before slicing. After the normalization the absolute
+maximum of the input signal is equal to one.
+
+#### normalize_output
+If `normalize_output` is set to true, the audio slices are normalized before writing. After the normalization the absolute
 maximum of every sound clip is equal to one. The normalization method processes the audio with several channels at
 once, i.e. the channels linked.
 
@@ -40,7 +44,8 @@ output_dir: output
 output_csv: files.csv
 
 use_hashing: true
-normalize: false
+normalize_input: true
+normalize_output: false
 
 interval: 10.0
 length: 1.0
