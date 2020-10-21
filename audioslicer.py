@@ -31,7 +31,7 @@ class AudioSlicer:
         # counter
         self.out_count = 0
 
-        self.csv_header = ['id', 'filename', 'source', 'offset']
+        self.csv_header = ['id', 'filename', 'source', 'offset', 'peak', 'rms']
         self.csv_rows = []
 
     def slice(self, filename, interval, normalize=False):
@@ -67,7 +67,9 @@ class AudioSlicer:
 
             # file info
             offset = offset_samples / sr
-            row = [self.out_count, slice_fn, filename, offset]
+            rms = np.sqrt(np.mean(np.square(y)))
+            peak = np.max(np.abs(y))
+            row = [self.out_count, slice_fn, filename, offset, peak, rms]
             self.csv_rows.append(row)
 
             self.out_count += 1
