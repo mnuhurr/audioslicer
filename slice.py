@@ -42,7 +42,10 @@ def main():
 
     # process
     for fn in tqdm(filenames):
-        slicer.slice(fn, cfg['interval'])
+        slicer.slice(filename=fn,
+                     interval=cfg['interval'],
+                     normalize_input=cfg['normalize_input'],
+                     normalize_output=cfg['normalize_output'])
 
     # summary
     slicer.write_report(cfg['output_csv'])

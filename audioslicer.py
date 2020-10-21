@@ -31,18 +31,26 @@ class AudioSlicer:
         # counter
         self.out_count = 0
 
-        self.csv_header = ['id', 'filename', 'source', 'offset', 'peak', 'rms']
+        self.csv_header = ['id', 'filename', 'source', 'offset', 'peak', 'rms', 'input_peak', 'input_rms']
         self.csv_rows = []
 
-    def slice(self, filename, interval, normalize=False):
+    def slice(self, filename, interval, normalize_input=False, normalize_output=False):
         '''
         process a single file. keeps track of the number of written files and updates the counter accordingly.
 
         :param filename:
+        :param normalize_input: boolean value whether the input signal should be normalized before slicing
+        :param normalize_output: boolean value whether the sliced audio segment should be normalized before writing
         :return: None
         '''
 
         y, sr = sf.read(filename)
+
+        peak_y = np.max(np.abs(y))
+        rms_y = np.sqrt(np.mean(np.square(y)))
+
+        if normalize_input:
+            y = self.normalize(y)
 
         num_slice_samples = int(self.audio_len * sr)
         interval_samples = int(interval * sr)
@@ -59,7 +67,7 @@ class AudioSlicer:
                 continue
 
             # normalization
-            if normalize:
+            if normalize_output:
                 y = self.normalize(y)
 
             # write file
@@ -67,9 +75,9 @@ class AudioSlicer:
 
             # file info
             offset = offset_samples / sr
-            rms = np.sqrt(np.mean(np.square(slice_y)))
-            peak = np.max(np.abs(slice_y))
-            row = [self.out_count, slice_fn, filename, offset, peak, rms]
+            rms_slice = np.sqrt(np.mean(np.square(slice_y)))
+            peak_slice = np.max(np.abs(slice_y))
+            row = [self.out_count, slice_fn, filename, offset, peak_slice, rms_slice, peak_y, rms_y]
             self.csv_rows.append(row)
 
             self.out_count += 1
