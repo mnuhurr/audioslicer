@@ -67,8 +67,8 @@ class AudioSlicer:
 
             # file info
             offset = offset_samples / sr
-            rms = np.sqrt(np.mean(np.square(y)))
-            peak = np.max(np.abs(y))
+            rms = np.sqrt(np.mean(np.square(slice_y)))
+            peak = np.max(np.abs(slice_y))
             row = [self.out_count, slice_fn, filename, offset, peak, rms]
             self.csv_rows.append(row)
 
