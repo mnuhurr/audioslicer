@@ -2,6 +2,8 @@
 import os
 import glob
 
+from tqdm import tqdm
+
 from common import load_config, check_output_dirs
 from audioslicer import AudioSlicer
 
@@ -39,7 +41,7 @@ def main():
     filenames = get_file_list(cfg['audio_dir'])
 
     # process
-    for fn in filenames:
+    for fn in tqdm(filenames):
         slicer.slice(fn, cfg['interval'])
 
     # summary
