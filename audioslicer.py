@@ -46,11 +46,11 @@ class AudioSlicer:
 
         y, sr = sf.read(filename)
 
-        peak_y = np.max(np.abs(y))
-        rms_y = np.sqrt(np.mean(np.square(y)))
-
         if normalize_input:
             y = self.normalize(y)
+
+        peak_y = np.max(np.abs(y))
+        rms_y = np.sqrt(np.mean(np.square(y)))
 
         num_slice_samples = int(self.audio_len * sr)
         interval_samples = int(interval * sr)
