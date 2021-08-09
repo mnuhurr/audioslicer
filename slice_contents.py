@@ -91,8 +91,7 @@ def main():
     output_files = pd.read_csv(csv_fn)
 
     #src_dir = '../ss_synth/soundscapes'
-    #src_dir = '../longscapesynth/soundscapes'
-    src_dir = '/home/mnu/Documents/meta/residential_area'
+    src_dir = '../longscapesynth/soundscapes'
 
     #txt_fns = glob.glob(os.path.join(src_dir, '*.txt'))
     txt_fns = glob.glob(os.path.join(src_dir, '*.ann'))
